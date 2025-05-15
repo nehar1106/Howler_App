@@ -1,0 +1,45 @@
+const API_BASE = '/api/v2';
+
+
+const HTTPClient = {
+  get: (url) => {
+    console.log("In HTTPclient - URL is " + url);
+    return fetch(`${API_BASE}${url}`)
+    .then(res => {
+        if(res.ok) {
+
+    console.log("In Fetch API returning data -->  "); 
+          return res.json();
+        }
+        throw new Error('Network response was not ok.');
+      })
+      .then(obj => {
+        console.log(obj);
+        return obj;
+      })
+      .catch(err => console.log(err));
+  },
+  post: (url, data) => {
+
+  }
+};
+
+
+
+
+export default {
+  getCounties: () => {
+    console.log("In apiclient.js - getCounties");
+    return HTTPClient.get('/counties');
+  },
+
+  getParksByCounty: (county) => {
+    console.log("In apiclient.js - getParksByCounty -->" + county);
+    return HTTPClient.get("/counties/" + county + "/parks");
+  },
+
+  getParkById: (id) => {
+    console.log("In apiclient.js - parkById --> " + id);
+    return HTTPClient.get(`/parks/${id}`);
+  },
+};

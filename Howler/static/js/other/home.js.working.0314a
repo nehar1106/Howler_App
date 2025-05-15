@@ -1,0 +1,274 @@
+import api from './APIClient.js';
+
+console.log ("Entering home.js ");
+
+/*--
+const heading = document.querySelector('p');
+heading.textContent = 'Hello, world!';
+const heading1 = document.querySelector('p1');
+heading1.textContent = 'Hello, world1!';
+const heading2 = document.querySelector('p2');
+heading2.textContent = 'Hello, world2!';
+---*/
+let userid = 12;
+let parm_userid = 17;
+
+const data = {name: "John doe", email: "test@exampl.com"};
+
+const options = {
+
+	method : "POST",
+	headers: {"Content-Type": "application/json"},
+	body: JSON.stringify(data)
+};
+
+
+function func_click () {
+
+	console.log("I am in p1 function div clicked");
+};
+
+const myDiv1 = document.getElementById("p1");
+
+myDiv1.addEventListener("click", function( ){
+	console.log("I am in p1 div clicked");
+	console.log(myDiv1.textContent);
+
+fetch("/api/profile/", options)
+  .then(response => window.location = "/api/profile/?id=" + parm_userid)
+  .then(data => console.log ("I am in post user - client "))
+  .catch(error => console.error(error));
+
+});
+
+const myDiv2 = document.getElementById("p2");
+
+myDiv2.addEventListener("click", function() {
+	console.log("I am in p2 div clicked");
+	console.log(myDiv2.textContent);
+	
+fetch("https://example.com/api/users", options)
+  .then(response => response.json())
+  .then(data => console.log ("I am in post user - client "))
+  .catch(error => console.error(error));
+
+
+
+});
+
+const myDiv3 = document.getElementById("p3");
+
+myDiv3.addEventListener("click", function() {
+	console.log("I am in p3 div clicked");
+	console.log(myDiv3.textContent);
+
+
+});
+
+
+
+fetch('/api/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
+let final_str = '';
+fetch('/api/userinfo')
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in user - client ");
+    console.log(data);
+    console.log(JSON.parse(data));
+    let user_json = JSON.parse(data);
+
+    console.log(JSON.stringify(data));
+    
+//	let ele1 = data.find(el => el.id === 17);
+	// => {name: "Albania", code: "AL"}
+
+	console.log("UserDisp -->" + JSON.parse(data)["id"] + user_json["first_name"] + user_json["last_name"] );
+
+//    let string1 = JSON.stringify(data);
+        const heading = document.querySelector('p');
+        heading.textContent = user_json["first_name"] + ' ' + user_json["last_name"] ;
+    // Do something with the JSON data
+  })
+  .catch(error => console.error(error));
+
+  
+fetch('/api/howls')
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in howls - client ");
+    console.log(data);
+    console.log(JSON.stringify(data));
+
+	for (var i=0; i < data.length;i++ ) {
+//	console.log("looping -- " + i);
+//	console.log(data[i].userId);
+	
+	if (data[i].userId == 17)
+	{
+//	console.log(data[i].text);
+	final_str = final_str + "\n" + i + '----' + data[i].text;
+	};
+	console.log(final_str);
+	}
+    let ary_howls = JSON.parse(data);
+    let ele_id_nm = '';
+	for (var i=0; i < ary_howls.length;i++ ) {
+	    ele_id_nm = 'p' + (i+1);
+	    console.log(ele_id_nm);
+        const para2 = document.getElementById(ele_id_nm);
+		para2.textContent = ary_howls[i]; 
+	}
+/*-    const para1 = document.querySelector('p1');
+	para1.textContent = data; 
+--*/
+//	para1.textContent = JSON.stringify(data); 
+	// Do something with the JSON data
+  })
+  .catch(error => console.error(error));
+
+let comp_ary1 = [];
+fetch('/api/followerhowls')
+  .then(response => response.json())
+  .then(data => {
+
+    console.log(data);
+
+/*--
+    const para3 = document.getElementById('tarea2');
+	para3.value = data; 
+--*/	
+	let ary_howls = JSON.parse(data);
+	
+	console.log("Before printing all follower howls\n");
+	console.log(ary_howls);
+	console.log("After printing all follower howls\n");
+
+	let ele_id_nm = '';
+
+/*--
+	for (var i=0; i < ary_howls.length;i++ ) {
+	    ele_id_nm = 'tarea' + (i+1);
+	    console.log(ele_id_nm);
+        const para2 = document.getElementById(ele_id_nm);
+		para2.value = ary_howls[i]; 
+	}
+--*/
+	let para2 = '';
+	for (var i=0; i < ary_howls.length;i++ ) {
+	    ele_id_nm = 'p' + (i+1);
+	    console.log(ele_id_nm);
+        para2 = document.getElementById(ele_id_nm);
+        comp_ary1 = ary_howls[i].split('~');
+
+		para2.textContent = comp_ary1[1] + '<>' + comp_ary1[2] + '<>' + comp_ary1[3] + '<>' + comp_ary1[4];
+/*---		
+		para2.addEventListener("click", function( ){
+		console.log("I am in p1 div clicked");
+		console.log(ele_id_nm.textContent);
+
+		fetch("/api/profile/", options)
+		.then(response => window.location = "/api/profile/?id=" + comp_ary1[0])
+		.then(data => console.log ("I am in post user - client "))
+		.catch(error => console.error(error));
+
+		});
+	--*/
+//		para2.textContent = ary_howls[i]; 
+	}
+
+  })
+  .catch(error => console.error(error));
+  
+
+fetch('/api/userinfo/26')
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in user - client ");
+    console.log(data);
+    console.log(JSON.parse(data));
+    let user_json = JSON.parse(data);
+
+    console.log(JSON.stringify(data));
+    
+//	let ele1 = data.find(el => el.id === 17);
+	// => {name: "Albania", code: "AL"}
+
+	console.log("UserDisp -->" + JSON.parse(data)["id"] + user_json["first_name"] + user_json["last_name"] );
+
+    let string1 = JSON.stringify(data);
+        const heading = document.querySelector('p');
+        heading.textContent = user_json["first_name"] + ' ' + user_json["last_name"] ;
+    // Do something with the JSON data
+  })
+  .catch(error => console.error(error));
+/*--
+api.getUserinfo(userid).then(howls => {
+  console.log("In home.js -> getUserInfo -->\n" + howls);
+  howls.forEach(howl => {
+	const heading = document.querySelector('p');
+	heading.textContent = 'Hello, world!';
+  });
+});
+---*/
+
+/*--
+api.getCounties().then(counties => {
+  console.log("In home.js -> getCounties -->\n" + counties);
+  counties.forEach(county => {
+    const option = document.createElement('option');
+    option.innerHTML = county;
+    option.value = county;
+    countiesSelect.append(option);
+  });
+  updateParks();
+});
+---*/
+
+function fetch_userinfo () {
+
+fetch('/api/userinfo')
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in user - client ");
+    console.log(data);
+    console.log(JSON.parse(data));
+    let user_json = JSON.parse(data);
+
+    console.log(JSON.stringify(data));
+    
+//	let ele1 = data.find(el => el.id === 17);
+	// => {name: "Albania", code: "AL"}
+
+	console.log("UserDisp -->" + JSON.parse(data)["id"] + user_json["first_name"] + user_json["last_name"] );
+
+//    let string1 = JSON.stringify(data);
+        const heading = document.querySelector('p');
+        heading.textContent = user_json["first_name"] + ' ' + user_json["last_name"] ;
+    // Do something with the JSON data
+  })
+  .catch(error => console.error(error));
+
+};
+
+
+function make_clickable () {
+
+	const myDiv1 = document.getElementById("p1");
+
+	myDiv1.addEventListener("click", function( ){
+		console.log("I am in p1 div clicked");
+		console.log(myDiv1.textContent);
+
+	fetch("/api/profile/", options)
+	  .then(response => window.location = "/api/profile/?id=" + parm_userid)
+	  .then(data => console.log ("I am in post user - client "))
+	  .catch(error => console.error(error));
+
+	});
+	
+};
+

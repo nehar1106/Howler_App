@@ -1,0 +1,128 @@
+const express = require('express');
+const apiRouter = express.Router();
+
+
+/************\
+* API ROUTES *
+\************/
+/*--
+let counties = require('../data/counties.json');
+let parks = require('../data/parks.json');
+--*/
+
+//let users = require("./src/data/users.json");
+let users = require("../data/users.json");
+let howls = require("../data/howls.json");
+let follows = require("../data/follows.json");
+
+console.log ("json users is - ", users);
+console.log ("json users ID is - ", users.userId);
+console.log ("json howls is - ", howls);
+console.log ("json follows is - ", follows);
+
+apiRouter.use(express.json());
+
+//    return HTTPClient.get(`/userinfo/${userid}`);
+//    return HTTPClient.get(`/howls/${userid}` );
+//    return HTTPClient.get(`/FollowedHowls/${userid}`);
+
+
+//Get all counties
+apiRouter.get('/userinfo/${userid}', (req,  res) => {
+  console.log ("In APIroutes.js --> get Userinfo ");
+  const userid = req.params.userid;
+   ele = data.find(el => el.userId === userid);
+  if(ele) {
+    res.json(ele["text"]);
+  }
+  else {
+    res.status(404).json({error: 'User Howl not found'});
+  }
+});
+
+//Get all counties
+apiRouter.get('/api/userinfo', (req,  res) => {
+  console.log ("In APIroutes.js --> get Userinfo ");
+});
+
+
+//Get all counties
+apiRouter.get('/counties', (req,  res) => {
+  console.log ("In APIroutes.js --> get counties ");
+  res.json(counties);
+});
+//Get all parks
+apiRouter.get('/parks', (req,  res) => {
+  console.log ("In APIroutes.js --> get parks ");
+  res.json(parks);
+});
+//Get specific park
+apiRouter.get('/parks/:parkId', (req,  res) => {
+  console.log ("In APIroutes.js --> get parks by parkId ");
+  const parkId = req.params.parkId;
+  let park = parks.find(park => park.id == parkId);
+  if(park) {
+    res.json(park);
+  }
+  else {
+    res.status(404).json({error: 'Park not found'});
+  }
+});
+//Get all parks in specific county
+apiRouter.get('/counties/:county/parks', (req,  res) => {
+  console.log ("In APIroutes.js --> get all parks in specific county");
+  const county = req.params.county;
+  const results = parks.filter(park => !county || county ==='all' || park.county.includes(county));
+  res.json(results);
+});
+
+apiRouter.get('/counties/:county', (req,  res) => {
+  console.log ("In APIroutes.js --> get specific county");
+  const countyParam = req.params.county;
+  let county = counties.find(county => county == countyParam);
+  if(county) {
+    res.json(county);
+  }
+  else {
+    res.status(404).json({error: 'County not found'});
+  }
+});
+
+
+//Create a park
+apiRouter.post('/parks', (req,  res) => {
+  console.log ("In APIroutes.js --> create a park");
+  let newPark = req.body;
+  parks.push(newPark);
+  res.json(newPark);
+});
+//Create a county
+apiRouter.post('/counties', (req,  res) => {
+  console.log ("In APIroutes.js --> create a county");
+  let newCounty = req.body;
+  counties.push(newCounty.name);
+  res.json(newCounty.name);
+});
+
+
+//Update a county
+apiRouter.put('/counties/:county', (req,  res) => {
+  res.status(501).json({error: 'Not implemented'});
+});
+//Update a park
+apiRouter.put('/parks/:parkId', (req,  res) => {
+  res.status(501).json({error: 'Not implemented'});
+});
+
+
+//Delete a county
+apiRouter.delete('/counties/:county', (req,  res) => {
+  res.status(501).json({error: 'Not implemented'});
+});
+//Delete a park
+apiRouter.delete('/parks/:parkId', (req,  res) => {
+  res.status(501).json({error: 'Not implemented'});
+});
+
+
+module.exports = apiRouter;

@@ -1,0 +1,16 @@
+const express = require('express');
+const router = express.Router();
+
+const apiRouter = require('./api/APIRoutes');
+//const apiRouter = require('./src/api/APIRoutes');
+
+//const frontendRouter = require('./frontend/FrontendRoutes');
+
+console.log("In routes.js - 1");
+//router.use(frontendRouter);
+//router.use('/api/v2', apiRouter);
+router.use('/', apiRouter);
+
+console.log("In routes.js - 2");
+
+module.exports = router;

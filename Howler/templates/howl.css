@@ -1,0 +1,45 @@
+/* .howlFeed{
+    flex: 0.5;
+    min-width:fit-content;
+    overflow-y: scroll;
+}
+
+.howlBox {
+    padding-bottom: 10px;
+    border-bottom: 8px;
+    padding-right: 10px;
+}
+
+.howlBox form {
+    display: flex;
+    flex-direction: column;
+}
+
+.howlBox input {
+    flex: 1;
+    margin-left: 20px;
+    font-size: 20px;
+    border: none;
+    outline: none;
+} */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .box {
+    width: 500px;
+    height: 100px;
+    background-color: #ccc;
+    margin-bottom: 10px;
+   
+  }
+ div1 {
+   
+   
+    border: 5px solid gray;
+    margin: 0;
+  }

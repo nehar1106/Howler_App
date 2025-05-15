@@ -1,0 +1,67 @@
+import api from './APIClient.js';
+
+console.log ("Entering profile.js ");
+
+const query = window.location.search;
+let parameters = new URLSearchParams(query);
+let id = parameters.get('id');
+
+console.log ("Entering profile.js1 " + id);
+
+fetch('/api/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error(error));
+
+
+fetch(`/api/userinfo/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in profile user123 - client ");
+    console.log(data);
+        const para1 = document.getElementById('h1');
+		para1.textContent = JSON.stringify(data); 
+
+  })
+  .catch(error => console.error(error));
+
+fetch(`/api/howls/${id}`)
+  .then(response => response.json())
+  .then(data => {
+    console.log ("I am in profile user howls - client ");
+    console.log(data);
+    console.log(JSON.stringify(data));
+
+	let ary_howls = JSON.parse(data);
+	
+	console.log("Before printing all profile howls\n");
+	console.log(ary_howls);
+	console.log("After printing all profile howls\n");
+
+	let ele_id_nm = '';
+
+/*--
+	for (var i=0; i < ary_howls.length;i++ ) {
+	    ele_id_nm = 'tarea' + (i+1);
+	    console.log(ele_id_nm);
+        const para2 = document.getElementById(ele_id_nm);
+		para2.value = ary_howls[i]; 
+	}
+--*/
+	for (var i=0; i < ary_howls.length;i++ ) {
+	    ele_id_nm = 'p' + (i+1);
+	    console.log(ele_id_nm);
+        const para2 = document.getElementById(ele_id_nm);
+		para2.textContent = ary_howls[i]; 
+	}
+
+/*-    const para1 = document.querySelector('p1');
+	para1.textContent = data; 
+--*/
+//	para1.textContent = JSON.stringify(data); 
+	// Do something with the JSON data
+  })
+  .catch(error => console.error(error));
+
+
+
